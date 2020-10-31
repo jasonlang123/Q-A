@@ -30,6 +30,7 @@ public class Pong extends JPanel implements KeyListener {
 	private int PADDLE_SPEED_UP = 0;
 	private int PADDLE_SPEED_UP2 = 0;
 	private int botPaddleSpeed;
+	private int x;
 	
 	
 	// your instance variables here, I've given you a few 
