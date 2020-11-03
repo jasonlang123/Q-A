@@ -14,135 +14,110 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 public class Pong extends JPanel implements KeyListener {
 	
 	// constants that are predefined and won't change as the program runs
 	private final int WIDTH = 600, HEIGHT = 600, WINDOW_HEIGHT = 650;
 	//Measurements for each shape
-	private int PADDLE_WIDTH = 20, DIAM = 15, PADDLE_HEIGHT = 130, paddleRX = WIDTH-PADDLE_WIDTH,
-	paddleRY = (HEIGHT/2)-PADDLE_HEIGHT/2;
-	
-	private int scoreP1 = 0;
-	private int scoreP2 = 0;
-	private int difficulty = 1;
-	private int PADDLE_SPEED = 0;
-	private int PADDLE_SPEED2 = 0;
-	private int PADDLE_SPEED_UP = 0;
-	private int PADDLE_SPEED_UP2 = 0;
-	private int botPaddleSpeed;
-	private int x;
-	
-	
-	// your instance variables here, I've given you a few 
-
-	private int ballX= WIDTH/2, ballY=HEIGHT/2, speedX, speedY;
-	private int paddleLY = (HEIGHT/2)-PADDLE_HEIGHT/2;
-	private boolean p1 = false;
-	private boolean p2 = false;
-	private boolean gameOver = false;
-	private boolean gameStart = false;
-	
+	private int PADDLE_WIDTH = 20, DIAM = 15, PADDLE_HEIGHTR = 130, PADDLE_HEIGHTL = 130, paddleRX = WIDTH-PADDLE_WIDTH,
+	paddleRY = (HEIGHT/2)-PADDLE_HEIGHTR/2, paddleLY = (HEIGHT/2)-PADDLE_HEIGHTL/2, ballX= WIDTH/2, ballY=HEIGHT/2, 
+	PADDLE_HEIGHT = 130;
+	//Contains random data such as player scores
+	private int scoreP1 = 0, scoreP2 = 0, paddleMovementR = 0, paddleMovementL = 0, botPaddleMovement, botPaddleSpeed = 5, 
+	speedX =-1, speedY =2, speedX2 = -1, speedY2 = 2, subtractPaddle = 10, increaseSpeed = 1, paddleSpeed = 3;
+	//Checks if game is 1 player or 2 players
+	private boolean p1 = false, p2 = false;
 	// this method moves the ball at each timestep
 	public void move_ball() {
-if(gameStart == true) {
-	speedX = 1;
-	speedY = 2;
-}
 		ballX+=speedX;
-		ballY+=speedY;
-		
+		ballY+=speedY;	
 	}
-	
 	// this method moves the paddles at each timestep
 	public void move_paddles() {
-	
-	paddleLY += PADDLE_SPEED2;
-	
-	paddleRY += PADDLE_SPEED;
-	
-	paddleLY += PADDLE_SPEED_UP;
-	
-	paddleRY += PADDLE_SPEED_UP2;
-	
-	paddleRY += botPaddleSpeed;
-	
+	paddleLY += paddleMovementL;
+	paddleRY += paddleMovementR;
+	paddleRY += botPaddleMovement;
+	//Movement for bot
 	if(ballY-DIAM/2<paddleRY && p1 == true) {
-		botPaddleSpeed = -5;
+		botPaddleMovement = -botPaddleSpeed;
 	}
-	if(ballY-DIAM/2>paddleRY+PADDLE_HEIGHT && p1 == true) {
-		botPaddleSpeed = 5;
+	if(ballY-DIAM/2>paddleRY+PADDLE_HEIGHTR && p1 == true) {
+		botPaddleMovement = botPaddleSpeed;
 	}
-	if(ballY-DIAM/2 >= paddleRY && ballY-DIAM/2 <= paddleRY + PADDLE_HEIGHT && p1 == true) {
-		botPaddleSpeed = 0;
+	if(ballY-DIAM/2 >= paddleRY && ballY-DIAM/2 <= paddleRY + PADDLE_HEIGHTR && p1 == true) {
+		botPaddleMovement = 0;
 	}
 	}
-	
-	
 	// this method checks if there are any bounces to take care of,
 	// and if the ball has reached a left/right wall it adds to 
 	// the corresponding player's score
 	public void check_collisions() {
-		
-		if(ballX>=WIDTH-DIAM||ballX<=0) {
-			if(ballX>=WIDTH-DIAM) {
+		//Checks if the ball goes off screen
+	if(ballX>=WIDTH-DIAM||ballX<=0) {
+			//If the ball goes to the left side, it runs this code
+		if(ballX>=WIDTH-DIAM) {
 				scoreP1 = scoreP1 + 1;
+				speedX = speedX2; 
+				speedY = speedY2;
+				PADDLE_HEIGHTR = PADDLE_HEIGHT;
+				PADDLE_HEIGHTL = PADDLE_HEIGHT;
+				paddleLY = (HEIGHT/2)-PADDLE_HEIGHTL/2;
+				paddleRY = (HEIGHT/2)-PADDLE_HEIGHTR/2;
 				}
-			if(ballX<=0) {
+			//If the ball goes to the right, it runs this
+		if(ballX<=0) {
 				scoreP2 = scoreP2 + 1;
+				speedX =-speedX2; 
+				speedY =speedY2;
+				PADDLE_HEIGHTR = PADDLE_HEIGHT;
+				PADDLE_HEIGHTL = PADDLE_HEIGHT;
+				paddleLY = (HEIGHT/2)-PADDLE_HEIGHTL/2;
+				paddleRY = (HEIGHT/2)-PADDLE_HEIGHTR/2;
 			}
+			
 			ballX=WIDTH/2;
 			ballY=HEIGHT/2;
 			speedX = -speedX;
-			
 		}
-		// your code goes here
+		//If the ball hits the roof or floor, it bounces because of this code
 		if(ballY>=HEIGHT-DIAM||ballY<=0) {
 			speedY = -speedY;
 		}
-	
-		if(ballY-DIAM <= paddleRX+ PADDLE_WIDTH && ballY+DIAM>= paddleRX && ballY+DIAM<= paddleRY + PADDLE_HEIGHT && ballY + DIAM > paddleRY) {
+		//Collision for the right side paddle. This also includes my extra feature. If the ball hits the paddle, 
+		//it shrinks by 10 pixels
+		if(ballX>=WIDTH-PADDLE_WIDTH-DIAM && paddleRY <= ballY && ballY<=PADDLE_HEIGHTR+paddleRY) {
 			speedX = -speedX;
-			
+			PADDLE_HEIGHTR += -subtractPaddle;
+			speedX += -increaseSpeed;
+			speedY += -increaseSpeed;
 		}
-		
-			if(ballY>=paddleLY && ballY<= paddleLY+PADDLE_HEIGHT && ballX<=0+PADDLE_WIDTH) {
+		//Collision for left side paddle
+		if(ballY>=paddleLY && ballY<= paddleLY+PADDLE_HEIGHTL && ballX<=0+PADDLE_WIDTH) {
 			speedX = -speedX;
-			
-				
-	}
-	
-	if(ballX-DIAM<=0) {
-		speedX =+speedX;
-		
-		
-	
-	}
+			PADDLE_HEIGHTL += -subtractPaddle;
+			speedX += increaseSpeed;
+			speedY += increaseSpeed;
+		}
+	//These 4 if statements prevent the paddle from going off the screen
 	if(paddleLY <= 0) {
 		paddleLY = 0;
 	}
-	if(paddleLY + PADDLE_HEIGHT >= HEIGHT) {
-		paddleLY = HEIGHT - PADDLE_HEIGHT;
+	if(paddleLY + PADDLE_HEIGHTL >= HEIGHT) {
+		paddleLY = HEIGHT - PADDLE_HEIGHTL;
 	}
 	
 	if(paddleRY <= 0) {
 		paddleRY = 0;
 	}
-	if(paddleRY + PADDLE_HEIGHT >= HEIGHT) {
-		paddleRY = HEIGHT - PADDLE_HEIGHT;
+	if(paddleRY + PADDLE_HEIGHTR >= HEIGHT) {
+		paddleRY = HEIGHT - PADDLE_HEIGHTR;
 	}
-	
-	}
-	
-	
-	
-	
-
+}
 	// defines what we want to happen anytime we draw the game
 	// you simply need to fill in a few parameters here
 	public void paint(Graphics g) {
-		
-		// background color is gray
-		
+		// background color is black
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
@@ -153,142 +128,120 @@ if(gameStart == true) {
 		// draw your rectangles and circles here
 		g.setColor(new Color(255,0,0));
 		//Left side paddle
-		g.fillRect(0, paddleLY, PADDLE_WIDTH, PADDLE_HEIGHT);
+		g.fillRect(0, paddleLY, PADDLE_WIDTH, PADDLE_HEIGHTL);
 		
 		g.setColor(new Color(0,255,0));
 		//Right side paddle
-		g.fillRect(paddleRX, paddleRY, PADDLE_WIDTH, PADDLE_HEIGHT);
+		g.fillRect(paddleRX, paddleRY, PADDLE_WIDTH, PADDLE_HEIGHTR);
 		
-		// writes the score of the game - you just need to fill the scores in
-		
+		//Writes the score
 		Font f = new Font("Arial", Font.BOLD, 60);
 		g.setFont(f);
 		g.setColor(Color.RED);
-		g.drawString("" + scoreP1, WIDTH/2-60, 50);
+		//player 1 score
+		g.drawString("" + scoreP1, WIDTH/2-55, 50);
+		//player 2 score
 		g.setColor(Color.GREEN);
-		g.drawString("" + scoreP2, WIDTH/2+12, 50);
+		g.drawString("" + scoreP2, WIDTH/2+15, 50);
 		
-		Font h = new Font("Arial", Font.BOLD, 20);
-		
-		g.setFont(h);
-		g.setColor(Color.RED);
-		g.drawString("Difficulty: " + difficulty, 20,20 );
-		
-		
-		
-		//Ball
-		if(gameStart == true && gameOver == false) {
+		//Ball This color is blue
 		g.setColor(new Color(0,118,156));
 		g.fillOval(ballX, ballY, DIAM, DIAM);
-		}
 		
-		
+		//If the p1 or p2 score is equal to 6, they win
 		if(scoreP1 == 6) {
-		
 			g.setFont(f);
 			g.setColor(Color.RED);
-			g.drawString("Player 1 wins", 0+WIDTH/5, HEIGHT/2);
-			gameOver = true;
+			g.drawString("Player 1 wins", WIDTH/5, HEIGHT/2);
+			ballY = HEIGHT + HEIGHT;
 			speedX = 0;
 			speedY = 0;
+			PADDLE_HEIGHTR = 0;
+			PADDLE_HEIGHTL = 0;
 		}
 		if(scoreP2 == 6) {
-			
 			g.setFont(f);
 			g.setColor(Color.GREEN);
-			g.drawString("Player 2 wins", 0+WIDTH/5, HEIGHT/2);
-			gameOver = true;
+			g.drawString("Player 2 wins", WIDTH/5, HEIGHT/2);
+			ballY = HEIGHT + HEIGHT;
 			speedX = 0;
 			speedY = 0;
-		}
-		Font c = new Font("Arial", Font.BOLD, 50);
-		if(p1 == false && p2 == false) {
-			g.setFont(c);
-			g.setColor(Color.BLUE);
-			g.drawString("Type 2 for two players", 0+WIDTH/20, HEIGHT/2);
-			g.drawString("Type 1 for one player", 0+WIDTH/20, HEIGHT/3);
+			PADDLE_HEIGHTR = 0;
+			PADDLE_HEIGHTL = 0;
 		}
 	}
 
 	// defines what we want to happen if a keyboard button has 
-	// been pressed - you need to complete this
+	// been pressed
 	public void keyPressed(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
 		
 		// changes paddle direction based on what button is pressed
-		if (keyCode == KeyEvent.VK_DOWN && p2 == true && gameStart == true) {
-			PADDLE_SPEED = 3;
-		
-		
-				}
-		if (keyCode == KeyEvent.VK_UP && p2 == true && gameStart == true) {
-			// fill this in
-			PADDLE_SPEED = -3;
+		if (keyCode == KeyEvent.VK_DOWN && p2 == true) {
+			paddleMovementR = paddleSpeed;
+		}
+		if (keyCode == KeyEvent.VK_UP && p2 == true) {
+			paddleMovementR = -paddleSpeed;
 		}
 		
-		
-
-		if (e.getKeyChar() == 'w'&& gameStart == true) {
-			PADDLE_SPEED2 = -3;
-			
+		if (e.getKeyChar() == 'w') {
+			paddleMovementL = -paddleSpeed;	
 		}
-			// move paddle down
 			
-		
-		if (e.getKeyChar() =='s'&& gameStart == true) {
-			PADDLE_SPEED2 = 3;
+		if (e.getKeyChar() =='s') {
+			paddleMovementL = paddleSpeed;
 		}
-			// fill this in
 			
-	// turn 1-player mode on
-		if (e.getKeyChar() == '1'&& gameStart == false)
-			
+		// turn 1-player mode on
+		if (e.getKeyChar() == '1'&& p2 == false) {
 			p1 = true;
-			
-			gameStart = true;
+		}	
+		
 		// turn 2-player mode on
-		if (e.getKeyChar() == '2'&& gameStart == false) {
-			p2 = true;
-			
-			gameStart = true;
-		}
-			
+		if (e.getKeyChar() == '2'&& p1 == false) {
+			p2 = true;	
+		}		
 	}
 
 	// defines what we want to happen if a keyboard button
-	// has been released - you need to complete this
+	// has been released
 	public void keyReleased(KeyEvent e) {
 		
 		int keyCode = e.getKeyCode();
 		
 		// stops paddle motion based on which button is released
-		if (keyCode == KeyEvent.VK_UP && gameStart == true) {
-			PADDLE_SPEED = 0;
+		if (keyCode == KeyEvent.VK_UP) {
+			paddleMovementR = 0;
 		}
-			// fill this in
 
-		if (keyCode == KeyEvent.VK_DOWN && gameStart == true) {
-			PADDLE_SPEED = 0;
+		if (keyCode == KeyEvent.VK_DOWN) {
+			paddleMovementR = 0;
 		}
-			// fill this in
   
-		if(e.getKeyChar() == 'w'&& gameStart == true) {
-			PADDLE_SPEED2 = 0;
+		if(e.getKeyChar() == 'w') {
+			paddleMovementL = 0;
 			}
 		
-		if (e.getKeyChar() == 's'&& gameStart == true) {
-			PADDLE_SPEED2 = 0;
-	}
+		if (e.getKeyChar() == 's') {
+			paddleMovementL = 0;
 		}
+	}
 	
 	// restarts the game, including scores
 	public void restart() {
-
 		scoreP1 = 0;
 		scoreP2 = 0;
-		gameStart = false;
-		gameOver = false;
+		p1 = false;
+		p2 = false;
+		ballY = HEIGHT/2;
+		ballX = WIDTH/2;
+		speedX = -1;
+		speedY = 2;
+		PADDLE_HEIGHTR = PADDLE_HEIGHT;
+		PADDLE_HEIGHTL = PADDLE_HEIGHT;
+		paddleLY = (HEIGHT/2)-PADDLE_HEIGHTL/2;
+		paddleRY = (HEIGHT/2)-PADDLE_HEIGHTR/2;	
 	}
 
 	//////////////////////////////////////
@@ -352,4 +305,5 @@ if(gameStart == true) {
 	
 	// method does nothing
 	public void keyTyped(KeyEvent e) {}
+	
 }
