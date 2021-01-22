@@ -1,6 +1,6 @@
 
 public class warmUpGroupStringWork {
-	
+	//warmUpGroupStringWork
 	public void pigLatin(String str){
 		String firstLetter = "";
 		String pigLatin = "";
@@ -24,14 +24,14 @@ public class warmUpGroupStringWork {
 	}
 	
 	public void longest(String [] arr) {
-		String max = "";
+		String maximum = "";
 		
 		for(int i = 0; i < arr.length; i++) {
-			if(arr[i].length() > max.length()) {
-				max = arr[i];
+			if(arr[i].length() > maximum.length()) {
+				maximum = arr[i];
 			}
 		}
-		System.out.println(max);
+		System.out.println(maximum);
 	}
 	
 	public static void main(String[] args) {
