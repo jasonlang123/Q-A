@@ -1,0 +1,47 @@
+
+public class bankAccount {
+	private String name; private int money; 
+	private double interest;
+
+public bankAccount(String n, int m, double i) { // constructor
+	
+	this.name = n;
+	this.money = m;
+	this.interest = i;
+	
+	}
+public bankAccount(String n, double i) {
+	this.name = n;
+	this.interest = i;
+	money= 0;
+}
+//
+public void deposit (int n) {
+	money += n;
+
+}
+
+public void withdraw (int n) {
+	money -= n; 
+}
+public void addInterest() {
+	money += money * interest;
+}
+public String toString() {
+	return("Your name is " +name+". Your current balance is " +money);
+	
+}
+
+
+public static void main(String[] args) {
+	// name, money, interest, deposit, withdraw
+	bankAccount bank1 = new bankAccount("Jason", 10, 0.2);
+	System.out.println(bank1);
+	bank1.withdraw(5);
+	System.out.println(bank1);
+	bank1.deposit(5);
+	System.out.println(bank1);
+	bank1.addInterest();
+	System.out.println(bank1);
+}
+}
