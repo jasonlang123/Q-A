@@ -1,0 +1,107 @@
+
+public class wrestler {
+	
+
+
+private int weight, wins;
+private String name, outfitColor, intemidatingLine;
+
+
+public wrestler(String n, String i, String j, int w) { // constructor
+		this.weight = w; 
+	
+		this.name = n;
+				
+		this.outfitColor = i;
+		this.intemidatingLine = j;
+}
+
+public String intemidation() {
+		return(intemidatingLine);
+}
+public int lift(int t) {
+	
+	t*=0.1;
+	return (t);
+	
+}
+public String toString() {
+	return ("I am "+name+ ". I weigh " + (lift(60)+weight) + " lbs. I have "+ wins + " victories and my outfit is "+ outfitColor + ". "+intemidation());
+	
+	
+}
+
+public boolean fight(wrestler opponent) {
+	if(this.weight > opponent.weight) {
+		wins++;
+		return true;
+	}
+	else if (opponent.weight > weight) {
+		opponent.wins++;
+		return false;
+	}
+	else {
+		
+		if (name.compareToIgnoreCase(opponent.name) < 0) {
+			wins++;
+			return true;
+		}
+		else {
+			opponent.wins++;
+			return false;
+		}
+	}
+}
+
+public boolean tagTeam(wrestler[] allies, wrestler[] opponents) {
+	
+	double allyWeight = 0;
+	double enemyWeight = 0;
+
+	for(wrestler w: allies) {
+		w.outfitColor = this.outfitColor;
+	}
+	
+	for(int i = 0; i < opponents.length; i++) {
+		opponents[i].outfitColor = opponents[0].outfitColor;
+		
+		enemyWeight += opponents[i].weight;
+	}
+	if(allyWeight >= enemyWeight) {
+		
+		wins++;
+		
+		for(wrestler w : allies) {
+			w.wins++;
+		}
+		return true;
+		
+	}
+	else {
+		for(wrestler w : opponents) {
+			w.wins++;
+		}
+		return false;
+	}
+}
+
+
+public static void main(String[]args) {
+	wrestler Jason = new wrestler ("Jason", "blue","You're going down!", 350);
+	wrestler bob = new wrestler ("bob", "red","GRRRRRRRRRRRRRRRRR!", 300);
+	wrestler Will = new wrestler ("Jason","GRRRRRRRRRRRRRRRRR!", "blue", 200);
+	wrestler Maddy = new wrestler ("Jason", "blue","GRRRRRRRRRRRRRRRRR!", 110);
+	
+	
+	wrestler [] allies = {Jason, bob};
+	wrestler [] opps = {Will, Maddy};
+	
+	System.out.println(Jason);
+	System.out.println(Jason.fight(bob));
+	System.out.println(Jason);
+	System.out.println(bob.fight(Will));
+	System.out.println(bob);
+	System.out.println(Jason.tagTeam(allies, opps));
+}
+
+}
