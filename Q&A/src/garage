@@ -1,0 +1,54 @@
+
+public class garage {
+	private	String garageName;
+	private int carNum;
+	private int value;
+	private car[] carList;
+	
+	
+	public garage(int x) {
+		carList = new car[x];
+		
+		
+	}
+	
+	public void addCar(String name, int year, int mileage,int i) {
+		
+		if(i>= carList.length || i < 0) {
+			System.out.println("invalid index!");
+		}
+		
+		else	{
+			carList[i] = new car( name,  year,  mileage, i);
+		}
+		}
+
+	public int totalWorth() {
+		int sum = 0;
+		for(int i = 0; i < carList.length; i++) {
+			if(carList[i] != null) {
+				sum += carList[i].worth();
+			}
+		}
+		return sum;
+	}
+	public int averageMileage() {
+		int avg = 0;
+		for(int i = 0; i < carList.length; i++) {
+			if(carList[i] != null) {
+				avg += carList[i].getMileage();
+			}
+		}
+		return avg/carList.length;
+	}
+	public void drive(int i, int n) {
+		carList[i].drive(n);
+	}
+	
+	public static void main(String[]args) {
+		car Lamborghini = new car ("Lamborghini",100, 20, 80);
+		car Ferrari = new car ("Ferrari",20, 10, 90);
+		
+		garage carList = new garage(2);
+	}
+}
