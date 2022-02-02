@@ -1,0 +1,32 @@
+
+public class car {	
+	
+	private String name;
+	private int year;
+	private int mileage;
+	int value;
+	
+	public car(String name, int year, int mileage, int value) {
+		this.name = name;
+		this.year = year;
+		this.mileage = mileage;
+		this.value = value;
+		
+		
+	}
+	
+	public void drive(int d){
+		mileage += d;
+	}
+	
+public int worth(){
+		return((year+mileage)/2);
+	}
+
+public int getMileage() {
+	return (mileage);
+
+}
+}
+
+
