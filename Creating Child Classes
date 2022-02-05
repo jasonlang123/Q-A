@@ -1,0 +1,122 @@
+
+public class Vehicle {
+	
+	private String name;
+	private int year;
+	private int mileage;
+	
+	private int mile;
+	private int hour;
+	
+	public Vehicle(String name, int year, int mileage, int mile, int hour) {
+		this.setName(name);
+		this.setYear(year);
+		this.mileage = mileage;
+		this.mile = mile;
+		this.hour = hour;
+	
+	}
+	
+	public double drive() {
+		return(mileage += mile);
+	}
+	
+	public double speed() {
+		return mile /= hour;
+	}
+	
+	
+	public void getOlder() {
+		setYear(getYear() + 1);
+	}
+	
+	public String toString() {
+		return("My vehicle is "+getName()+ " I'm traveling at " + speed() + " mph. The mileage on my vehicle is "
+				+ drive()+" My vehicle is "+getYear()+ " years old.");
+		
+	}
+	public static void main(String[] args) {
+	Vehicle bike1 = new Vehicle("mountain bike", 5, 10, 15, 1);
+	System.out.println(bike1);
+	bike1.getOlder();
+	System.out.println(bike1);
+	
+}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+}
+
+
+
+public class Bike extends Vehicle{
+	String color;
+	int pedal;
+	public Bike(String name, int year, int mileage, int mile, int hour, String color, int pedal) {
+		super(name, year, mileage, mile, hour);
+		this.color = color;
+		this.pedal = pedal;
+	}
+	public double speed() {
+		return pedal *10;
+	}
+	
+	public String broken() {
+		if(pedal >= 1000) {
+			return ("oh no my bike broke! :(");
+		}
+		else {
+			return("yipppeeeee!");
+		}
+	}
+	public String toString() {
+		return("My vehicle is "+super.getName()+ " I'm traveling at " + speed() + " mph. The mileage on my vehicle is "
+				+ drive()+" My vehicle is "+getYear()+ " years old.");
+		
+	}
+	
+	public static void main(String[] args) {
+		Bike bike2 = new Bike("mountain bike", 5, 10, 15, 1, "red", 10);
+		System.out.println(bike2);
+		bike2.getOlder();
+		System.out.println(bike2);
+		
+	}
+	
+}
+
+public class Bike2 extends Bike{
+	String color;
+	public Bike2(String name, int year, int mileage, int mile, int hour, int pedal, String color) {
+		super(name, year, mileage, mile, hour, pedal);
+		this.color = color;
+	}
+	public double speed() {
+		return pedal *5;
+	}
+	public String toString() {
+		return("My vehicle is "+super.getName()+ " I'm traveling at " + speed() + " mph. The mileage on my vehicle is "
+				+ drive()+" My vehicle is "+getYear()+ " years old. " + broken()+ "The color of my bike is"+color);
+		
+	}
+	public static void main(String[] args) {
+		Bike bike2 = new Bike("mountain bike", 5, 10, 15, 1, 1000, "red");
+		System.out.println(bike2);
+		bike2.getOlder();
+		System.out.println(bike2);
+		
+	}
+}
