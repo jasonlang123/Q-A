@@ -1,0 +1,174 @@
+
+public class Bank {
+	private String name; private double balance; 
+
+
+public Bank(String name, double balance) { // constructor
+	
+	this.name = name;
+	this.balance = balance;
+	
+	}
+
+public double deposit (double n) {
+	return(balance += n);
+
+}
+
+public double withdraw (double n) {
+	return(balance -= n); 
+}
+
+public double getBalance() {
+	return (balance);
+}
+
+public String toString() {
+	return("Your name is " +name+". Your current balance is " +balance);
+	
+}
+
+
+public static void main(String[] args) {
+	// name, money, interest, deposit, withdraw
+	Bank bank1 = new Bank("Jason", 10);
+	System.out.println(bank1);
+	bank1.withdraw(5);
+	System.out.println(bank1);
+	bank1.deposit(5);
+	System.out.println(bank1);
+	
+	System.out.println(bank1);
+}
+}
+
+
+public class InterestAccount extends Bank{
+	double interest; 
+	public InterestAccount(String name, double balance, double interest) {
+		super(name, balance);
+		this.interest = interest;
+	
+	}
+	
+public double addInterest(){
+	
+	return(super.deposit(super.getBalance() * interest));
+	}
+
+public String toString() {
+	return(super.toString() +". With monthly interest, you now have "
++ addInterest() + ". ");
+}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		InterestAccount bank1 = new InterestAccount("Jason", 10, 0.2);
+		System.out.println(bank1);
+	}
+
+}
+
+
+public class CreditCard extends InterestAccount{
+	private double withdraw;
+	public CreditCard(String name, double balance, double interest, double withdraw) {
+		super(name, balance, interest);
+		this.withdraw = withdraw;
+		// TODO Auto-generated constructor stub
+	}
+	
+	public double deduct() {
+		return(super.withdraw(10));
+	}
+	
+	public String withdraw() {
+		
+		if(super.getBalance() > 100) {
+			String str = String.valueOf(super.withdraw(withdraw));
+			return ("You withdrawed " +withdraw+ " dollars and now have " + str + ".");
+		}
+		else {
+			return (" You cannot withdraw.");
+		}
+	}
+	public double addInterest(){
+		
+		return(super.deposit(super.getBalance() * (interest + 0.2)));
+		}
+
+	
+	public String toString() {
+		return(super.toString() + withdraw() + " The bank deducts 10 dollars and you now have "
+				+ deduct() + ".");
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		CreditCard bank3 = new CreditCard("Jason", 100, 0.2, 10);
+		System.out.println(bank3);
+	}
+	
+}
+
+
+public class GreatAccount extends Bank{
+	private int withdrawals, month;
+
+
+	public GreatAccount(String name, double balance, int withdrawals, int month) {
+		super(name, balance);
+		this.withdrawals = withdrawals;	
+		this.month = month;
+		
+	}
+
+	public void withdraw(int money) {
+		if (withdrawals < 3) {
+			super.withdraw(money);
+			withdrawals++;
+		}
+		}
+	
+	public void nextMonth() {
+		
+		if(month == 12) {
+			month = 0;
+			withdrawals = 0;
+		}
+		else{
+			month++;
+		}
+	}
+	
+	public String didWithdraw() {
+		if (withdrawals == 0 && month == 12) {
+			deposit(getBalance());
+			return("you did not withdraw for a year so your money is doubled. Your new balance is"
+					+ getBalance());
+		}
+		
+		else {
+			return("You do not qualify for double money.");
+		}
+		
+	
+	}
+	
+	public String toString() {
+		return (super.toString() + " The month is " + month + " "
+				+ "and your number of withdrawals is " + withdrawals + ". " +didWithdraw());
+	}
+	
+	public static void main(String[] args) {
+		GreatAccount bank4 = new GreatAccount("Jason", 20, 0, 12);
+		bank4.withdraw(10);
+		bank4.nextMonth();
+		System.out.println(bank4);
+		
+
+	}
+
+}
+
+
+
