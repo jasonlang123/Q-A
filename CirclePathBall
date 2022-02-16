@@ -1,0 +1,19 @@
+import java.awt.Color;
+
+public class CirclePathBall extends Ball {
+	public CirclePathBall(int startx, int starty, int startrad, int startxspeed, int startyspeed, Color startcolor) {
+		super(startx, starty, startrad, startxspeed, startyspeed, startcolor);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	private int n = 0;
+	
+	
+	public void move() {
+		super.move();
+		super.setX((int)(150 * Math.sin(n / 10.0 / Math.PI) + 200));
+		super.setY((int)(150 * Math.cos(n / 10.0 / Math.PI) + 200));
+		n++;
+	}
+}
