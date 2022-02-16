@@ -1,0 +1,20 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class BouncingBall extends Ball {
+
+	public BouncingBall(int startx, int starty, int startrad, int startxspeed, int startyspeed, Color startcolor) {
+		super(startx, starty, startrad, startxspeed, startyspeed, startcolor);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void move() {
+		super.move();
+		if(super.getX()>=WIDTH-super.getRad()|| super.getX()<=0) {
+			setXSpeed(-1*getXSpeed());
+		}
+		if(super.getY()>=HEIGHT-super.getRad()|| super.getY()<=0) {
+			setYSpeed(-1*getYSpeed());
+		}
+	}
+}
