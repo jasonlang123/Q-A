@@ -1,0 +1,35 @@
+import java.awt.Color;
+
+public class ShrinkingBall extends BouncingBall {
+	boolean w = true;
+	public ShrinkingBall(int startx, int starty, int startrad, int startxspeed, int startyspeed, Color startcolor) {
+		super(startx, starty, startrad, startxspeed, startyspeed, startcolor);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
+	public void move() {
+		super.move();
+		if(super.getRad()>=5 && w) {
+			setRad(super.getRad()-1);
+		}
+		
+		if(super.getRad()>=5 && w == false) {
+			setRad(super.getRad()+1);
+		}
+		
+		if(super.getRad() == 5) {
+			w = false;
+		}
+		
+		if(super.getRad() == 101) {
+			w = true;
+		}
+		
+		
+	
+	}
+	
+	
+}
