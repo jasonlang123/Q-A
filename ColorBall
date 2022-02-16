@@ -1,0 +1,24 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class ColorBall extends BouncingBall {
+	public ColorBall(int startx, int starty, int startrad, int startxspeed, int startyspeed, Color startcolor) {
+		super(startx, starty, startrad, startxspeed, startyspeed, startcolor);
+		// TODO Auto-generated constructor stub
+		
+	}
+	public void move() {
+		super.move();
+		if(0<super.getY() && super.getY() >= HEIGHT/3) {
+			super.setColor(Color.GREEN);
+		}
+		if(HEIGHT/3<super.getY() && super.getY()<= 2*HEIGHT/3) {
+			super.setColor(Color.RED);
+		}
+		if(2*HEIGHT/3<super.getY() && super.getY()<= HEIGHT) {
+			super.setColor(Color.YELLOW);
+		}
+	}
+	
+	
+}
