@@ -1,0 +1,26 @@
+
+public class AngryBot extends ChatBot{
+	public void sayHi() {
+		System.out.println("Hey! What"
+				+ " do you want buddy!");
+	}
+	
+	public void sayBye() {
+		System.out.println("See ya dummy!");
+	}
+	
+	public void startConversation() {
+		System.out.println("Go away! >:(");
+	}
+	public void askFirstQuestion() {
+		System.out.println("What do you want? >:(");
+	}
+	public void askSecondQuestion() {
+		System.out.println("Why are you so annoying? >:(");
+	}
+	public void askThirdQuestion() {
+		System.out.println("Why can't you leave me alone? >:(");
+	}
+	
+	
+}
