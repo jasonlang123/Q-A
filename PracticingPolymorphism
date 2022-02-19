@@ -1,0 +1,155 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+
+public class ShapeRunner {
+	
+	private Shape[] shapes = new Shape[4];
+	
+	// this method should move all the shapes in the list
+	public void moveShapes() {
+		for (int i = 0; i < shapes.length; i++)
+		shapes[i].move(5, 5);
+		// your code here
+	}
+	
+	// fill in your shape list here
+	public void setup() {
+		Shape myShape = new Shape(200, 200);
+		Shape myRect = new Rect(150, 150);
+		Shape myOval = new Oval(100, 100);
+		Shape myTri = new Tri(300, 50);
+		shapes[0] = myShape;
+		shapes[1] = myRect;
+		shapes[2] = myOval;
+		shapes[3] = myTri;
+		
+		// your code here
+	}
+	
+	// DON'T TOUCH BELOW CODE
+	
+	public void run() {
+		while (true ) {
+			moveShapes();
+			frame.repaint();
+			try {
+				Thread.sleep(75);
+			} catch (Exception ex) {}
+		}
+	}
+	
+	public static void main(String[] args) {
+		new ShapeRunner(); 
+	}
+	private JFrame frame;
+	public ShapeRunner() {
+		setup();
+		frame = new JFrame() {
+			public void paint(Graphics g) {
+				g.setColor(Color.WHITE);
+				g.fillRect(0, 0, 600, 600);
+				
+				for (Shape s: shapes)
+					s.draw(g);
+			}
+		};
+		frame.setSize(600, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		run();
+	}
+}
+
+
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Shape {
+	private int x, y;
+	
+	// simple method - should just move the 
+	// shape by the shift amounts
+	public void move(int xshift, int yshift) {
+		x += xshift;
+		y += yshift;
+	}
+	
+	// DON'T TOUCH BELOW CODE
+	
+	// takes a position as parameter
+	public Shape(int startx, int starty) {
+		x = startx;
+		y = starty;
+	}
+	
+	// a generic shape will just display text
+	public void draw(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.drawString("I'm a Shape", x, y);	
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+}
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Oval extends Rect{
+		private int OvalWidth;
+		private int OvalHeight;
+		
+		public Oval (int OvalWidth, int OvalHeight) {
+			super(50, 200);
+			this.OvalWidth = OvalWidth;
+			this.OvalHeight = OvalHeight;
+		}
+		public void draw(Graphics g) {
+			g.setColor(Color.RED);
+			g.drawOval(getX(), getY(), OvalWidth, OvalHeight);
+		}
+	}
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Rect extends Shape{
+	private int rectWidth;
+	private int rectHeight;
+	public Rect (int rectWidth, int rectHeight){
+		super(40, 30);
+		this.rectWidth = rectWidth;
+		this.rectHeight = rectHeight;
+	}
+	public void draw(Graphics g) {
+		g.setColor(Color.black);
+		g.drawRect(getX(), getY(), rectWidth, rectHeight);
+	}
+}
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Tri extends Shape{
+
+private int triangleSideX;
+private int triangleSideY;
+	public Tri (int triangleSideX, int triangleSideY){
+		super(100, 100);
+		this.triangleSideX = triangleSideX;
+		this.triangleSideY = triangleSideY;
+	}
+	public void draw(Graphics g) {
+		g.drawLine(getX(), getY(), getX()+triangleSideX, getY());
+		g.drawLine(getX(), getY(), getX()+(triangleSideX)/2, getY()+(triangleSideY)/5);
+		g.drawLine(getX()+triangleSideX, getY(), getX()+(triangleSideX)/2, getY()+(triangleSideY)/5);
+	}
+	
+}
