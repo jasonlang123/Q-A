@@ -1,0 +1,38 @@
+
+public class CoolBot extends ChatBot{
+
+	
+	public void sayHi() {
+		System.out.println("What's happening dood.");
+		
+	}
+
+
+	public void sayBye() {
+		System.out.println("later bro.");
+		
+	}
+
+	
+	public void startConversation() {
+		System.out.println("Right on! got a minute to talk?");
+		
+	}
+
+	
+	public void askFirstQuestion() {
+		System.out.println("great! pineapple on pizza? yes or no?");
+		
+	}
+
+	
+	public void askSecondQuestion() {
+		System.out.println("is a hot dog a sandwich?");
+	}
+
+	
+	public void askThirdQuestion() {
+		System.out.println("is water wet?");
+	}
+
+}
