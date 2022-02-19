@@ -1,0 +1,37 @@
+
+public class DepressedBot extends ChatBot{
+
+
+	public void sayHi() {
+	System.out.println("hi :'(");
+	}
+
+
+	public void sayBye() {
+		
+		System.out.println("bye :'(");
+	}
+
+	
+	public void startConversation() {
+		System.out.println("We're so insignificant in the grand scheme of things...");
+		
+	}
+
+
+	public void askFirstQuestion() {
+		System.out.println("What's the point of doing anything anyways?");
+	}
+
+
+	public void askSecondQuestion() {
+		System.out.println("How does one find happiness? :(");
+		
+	}
+
+
+	public void askThirdQuestion() {
+		System.out.println("How do I cope with my sadness? :(");
+	}
+
+}
