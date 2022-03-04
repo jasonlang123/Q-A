@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+
+
+public class Getting2KnowLists {
+	
+	public ArrayList<Character> removeSecond(ArrayList<Character> list) {
+		
+		for (int i = 1; i < list.size(); i +=1) {
+			list.remove(i);
+		}
+		return(list);
+	}
+	
+	
+	public ArrayList<String> reverseOrder(ArrayList<String> list){
+		ArrayList<String> reverse = new ArrayList<String> ();
+		for (int i = list.size() - 1; i >= 0; i--) {
+			reverse.add(list.get(i));
+		}
+		return (reverse);
+	}
+	
+	public ArrayList<Double> doubleValue(ArrayList<Double> list){
+		
+		for (int i = 0; i < list.size(); i++) {
+			list.set(i, list.get(i) * 2);
+		}
+		return list;
+	}
+	
+	public ArrayList<Character> pattern(int n){
+		ArrayList<Character> letters= new ArrayList <Character>();
+		for(int i = 0; i<n; i++) {
+			if(i%2==0) {
+				letters.add(0, (char)(97+i));
+			}
+			else {
+				letters.add((char)(97+i));
+			}
+		}
+		return(letters);
+	}
+
+
+	public static void main(String[] args) {
+		
+	Getting2KnowLists runner = new Getting2KnowLists();
+	ArrayList<Character> letters = new ArrayList<Character>();
+	letters.add('d');
+	letters.add('k');
+	letters.add('e');
+	letters.add('p');
+	letters.add('w');
+	letters.add('s');
+	letters.add('f');
+	System.out.println(letters);
+	System.out.println(runner.removeSecond(letters));
+	ArrayList<String> Strings = new ArrayList<String>();
+	Strings.add("lists");
+	Strings.add("are");
+	Strings.add("great");
+	System.out.println(Strings);
+	System.out.println(runner.reverseOrder(Strings));
+	ArrayList<Double> nums = new ArrayList<Double>();
+	nums.add(1.0);
+	nums.add(2.0);
+	nums.add(3.0);
+	nums.add(4.0);
+	nums.add(5.0);
+	nums.add(6.0);
+	nums.add(7.0);
+	System.out.println(nums);
+	System.out.println(runner.doubleValue(nums));
+	System.out.println(runner.pattern(5));
+	
+		
+		
+		
+	}
+
+}
