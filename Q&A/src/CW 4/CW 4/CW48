@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+
+public class CW48 {
+	
+	public ArrayList<Integer> maximum(double[] a) {
+		
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		for (int i = 1; i < a.length - 1; i++) {
+			
+			if (a[i-1] < a[i] && a[i+1] < a[i]) {
+				
+				list.add(i);
+			}
+		}
+		
+		System.out.println(list);
+		return list;
+	}
+	
+	
+	public ArrayList<String> jumble(String a, String b){
+		
+		ArrayList<String> myList = new ArrayList<String>();
+		
+        if (a.length() == 0) {
+        	myList.add(b);
+        }
+        
+        for (int i = 0; i <= a.length() - 1; i++){
+        	
+            char c = a.charAt(i);
+            
+            jumble(a.substring(0, i) + a.substring(i + 1), b + c);
+            
+        }
+        
+        return myList;
+    }
+	
+	public static void main(String [] args) {
+		
+		CW48 runner = new CW48();
+		
+		runner.maximum(new double[] {1, 6, -10, 20, -4});
+		
+		String word = "word";
+        System.out.println(runner.jumble(word, ""));
+	}
+
+}
