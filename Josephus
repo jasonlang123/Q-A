@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+
+public class Josephus {
+
+	public static int josephus(int size) {
+		//
+		
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        for (int i = 0; i < size; i++) {
+            list.add(i);
+        }
+        
+        int temp = 0;
+        
+        while (list.size() > 1) {
+        	
+            if (temp == list.size() - 1) {
+                list.remove(0);
+                temp = 0;
+                continue;
+            }
+            
+            if (temp == list.size()) {
+            	temp = 0;
+            }
+            
+            list.remove(temp+1);
+            temp++;
+            
+        }
+        
+        return list.get(0);
+        
+    }
+
+    public static void main(String[] args) {
+        System.out.println(josephus(4));
+    }
+    
+}
