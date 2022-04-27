@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Scanner;
+
+public class Translator {
+	
+    private static final HashMap<String, String> translate = new HashMap<>();
+
+    public static void main(String[] args) throws IOException {
+    	
+        new Translator();
+        String input = "";
+        
+    
+        while (!Objects.equals(input, "end")) {
+            System.out.println("What word shall we translate?");
+            Scanner sc = new Scanner(System.in);
+            input = sc.nextLine();
+            System.out.println(translate.get(input));
+        }
+    }
+
+    public Translator() throws IOException {
+    	
+        String fileName = "EnglishToArabicDictionary.txt";
+        BufferedReader in = new BufferedReader(new FileReader(fileName));
+        int index = 0;
+        String word = "";
+        
+        for (String line = in.readLine(); line != null; line = in.readLine()) {
+        	
+            if (index % 2 == 0) {
+                if (index == 0) word = line.trim().substring(1, line.length());
+                else word = line.trim();
+            }
+            else translate.put(word, line.trim());
+            index++;
+        }
+        
+        in.close();
+        
+    }
+}
