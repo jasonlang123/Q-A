@@ -1,0 +1,29 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class reverseAlphabetical {
+	//Print a string in reverse alphabetical order
+	public static void main(String args[]) {
+	      Scanner word = new Scanner(System.in);
+	      System.out.println("enter your word!");
+	      
+	      String str = word.nextLine();
+	      
+	      char arr[] = str.toCharArray();
+	      
+	      char a;
+	      char b;
+	     for(int i = 0; i < arr.length; i++) {
+	    	 for(int j = i + 1; j < arr.length; j++) {
+	    		 if (arr[j] > arr[i]) {
+	    			a = arr[i];
+	    			b = arr[j];
+	    			 arr[i] = b;
+	    			 arr[j] = a;
+	    		 }
+	    	 }
+	     }
+	      System.out.println(arr);
+	   
+}
+}
