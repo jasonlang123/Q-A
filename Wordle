@@ -1,0 +1,169 @@
+import java.util.Scanner;
+
+public class Wordle {
+
+	private final int GUESSLENGTH = 4, NUMGUESSES = 6;
+	
+
+	private int attempts = 0;
+	
+	private String[] letterArray = {"-----", "-----", "-----", "-----", "-----", "-----"};
+	private String[] guessArray = {"-----", "-----", "-----", "-----", "-----", "-----"};
+	// list of potential random words
+	private String[] randomWords = {"flake", "light", "poise", "train", "waste", "yacht", "crate", "faint", "image", "brave", "zebra", "dream", "paste"};
+	private char[] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+	
+	private String guess = "", answer = "";
+	
+	boolean end = false;
+
+	private Scanner input = new Scanner(System.in);
+
+	private void setup() {
+		//assigns a random word to the answer
+		answer = randomWords[(int) (Math.random()*randomWords.length)];
+
+		System.out.println("Wordle!");
+
+		System.out.println();
+
+		System.out.println();
+
+		System.out.println("Good Luck!");
+		
+		//testing purposes
+		//System.out.println(answer);
+		print();
+
+	}
+
+		
+
+	
+	private void guess() {
+		
+		while(end == false) {
+			//recieves player input
+			guess = input.next();
+			System.out.println("Guess a word");
+			//if your guess is not 5 letters wrong, redo
+			if (guess.length()!= 5) {
+				System.out.println("Your guess must be 5 letters");
+				print();
+			}
+			
+			else {
+				//turns guess to lowercase letters
+				guess = guess.toLowerCase();
+				//adds the player guess to the array
+				guessArray[attempts] = guess;
+				
+				String letterPlacement = "";
+				boolean placeHolder = false;
+				//removes letters from the array if they are not valid choices
+				for(int i = 0; i < guess.length(); i++) {
+					for(int j = 0; j < alphabet.length; j++) {
+						if (guess.charAt(i) == alphabet[j]) {
+							alphabet[j] = '#';
+						}
+					}
+				}
+				
+				for(int i = 0; i <= GUESSLENGTH; i++) {
+					for(int j = 0; j <= GUESSLENGTH; j++) {
+						//if the letters are the same and have the same index, print *
+						if(guess.charAt(i) == answer.charAt(j)) {
+							if(i == j) {
+								letterPlacement  += "*";
+								placeHolder = true;
+							}
+							//if the letter is in the word but not the same index print @
+							else {
+								letterPlacement  += "@";
+								placeHolder = true;
+							}
+						}
+						
+					}
+					//if it cycles through the loop and the letter is not found print X
+					if(placeHolder == false) {
+						letterPlacement  += "X";
+					}
+					placeHolder = false;
+				}
+				//adds it to the array
+				letterArray[attempts] = letterPlacement;
+				attempts++;
+				print();
+			}
+			if(guess.equals(answer)) {
+				//if guess is equal to answer game ends
+				end = true;
+				win();
+			}
+			
+			if(attempts == 6) {
+				//if attempts reaches 6 game end
+				end = true;
+				lose();
+			}
+			
+		}
+
+	}
+
+	public void print() {
+		//prints the rules and arrays
+	System.out.println("The asterisk (*) mean the letter is in the correct position, ");
+	System.out.println("the at sign (@) means the letter is in the word but not in the correct positon,");
+			System.out.println("and the X means the letteris not in the word.");
+		
+		for(int i = 0; i < NUMGUESSES; i++) {
+			System.out.print(letterArray[i]);
+			System.out.print(" ");
+			System.out.print(guessArray[i]);
+			System.out.println();
+		}
+		
+		for(int i = 0; i < alphabet.length; i++) {
+			System.out.print(alphabet[i]);
+			System.out.print(" ");
+		}
+		
+		
+	}
+	
+
+	public void win() {
+		//prints text if win
+		System.out.println("you won, it took you "+attempts+" attempts");
+		
+
+	}
+
+	
+
+	public void lose() {
+		//prints text if lose
+		System.out.println("you lost, the word was " + answer);
+
+	}
+
+	public static void main(String[] args) {
+
+		Wordle runner = new Wordle();
+
+		runner.setup();
+		runner.guess();
+
+	}
+
+	
+
+	
+
+	
+
+}
+
+
